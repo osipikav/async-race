@@ -1,12 +1,13 @@
 import { container } from "../../constants/constantsDOM";
-import { CARS, PAGE_ID } from "../../constants/constants";
+import { PAGE_ID } from "../../constants/constants";
 import { ICar } from "../../interfaces/interfaces";
 import getCarImage from "../../helpers/getCarImage";
+import { getCars } from "../../api/api";
 
-export const garageRender = () => {
+export const garageRender = async () => {
     container.innerHTML = '';
     container.append(createControlPannel())
-    container.append(createGarageContainer(CARS))
+    container.append(createGarageContainer(await getCars()))
 
 }
 
@@ -52,19 +53,16 @@ const controlButtons = (...args: string[]) => {
     return buttons
 }
 
-const createGarageContainer = (CARS: ICar[]) => {
+const createGarageContainer = (cars: { items: ICar[]; count: string | null }) => {
+
     const garageContainer = document.createElement('div');
     const garageTitle = document.createElement('h2');
-    garageTitle.textContent = 'Garage';
+    garageTitle.textContent = `Garage (${cars.count})`;
     const pageNumber = document.createElement('h2');
     pageNumber.textContent = `Page #${PAGE_ID}`;
     garageContainer.append(garageTitle, pageNumber)
-    CARS.forEach((car) => garageContainer.append(carRender(car)))
+    cars.items.forEach((car: ICar) => garageContainer.append(carRender(car)))
     garageContainer.append(controlButtons('prev', 'next'))
-
-
-
-
     return garageContainer;
 }
 

@@ -3,6 +3,7 @@ import { winnersRender } from './components/pages/winners/winners';
 import { container } from './components/constants/constantsDOM';
 import './style.css'
 
+
 function runApp() {
     const body = document.querySelector('body');
     const garageButton = pageSwitcherButton('garage');
@@ -10,7 +11,6 @@ function runApp() {
     body?.append(garageButton, winnersButton, container);
     container.classList.add("container");
     garageRender()
-
 
 };
 
